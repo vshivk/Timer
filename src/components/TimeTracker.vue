@@ -1,9 +1,24 @@
 <template>
-  <div :class="{'active-timer': active}">
-    <div class="timer">{{ formatTime() }}</div>
-    <button @click="startPause">{{ active ? 'Pause' : 'Start' }}</button>
-    <button @click="reset">Reset</button>
+  <div class="timer">
+    <div :class="{'active-timer': active}">
+      <div class="timer-time">{{ formatTime() }}</div>
+      <div class="timer-actions">
+        <div class="timer-actions-button-container">
+          <div @click="startPause">
+            <span v-if="!active" class="timer-actions-start"></span>
+            <div v-else class="stripes-container">
+              <div class="stripe"></div>
+              <div class="stripe"></div>
+            </div>
+          </div>
+        </div>
+        <div class="timer-actions-button-container">
+          <span class="timer-actions-reset" @click="reset"></span>
+        </div>
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -21,13 +36,15 @@ export default {
     startPause() {
       if (!this.active) {
         this.intervalId = setInterval(() => {
-          if (++this.seconds === 60) {
-            this.minutes++
+          if (this.seconds === 59) {
             this.seconds = 0
+            this.minutes++
+          } else {
+            this.seconds++
           }
           if (this.minutes === 60) {
-            this.hours++
             this.minutes = 0
+            this.hours++
           }
         }, 1000)
       } else {
@@ -43,18 +60,94 @@ export default {
       clearInterval(this.intervalId)
     },
     formatTime() {
-      const hh = this.hours.toString().padStart(2, '0')
-      const mm = this.minutes.toString().padStart(2, '0')
       const ss = this.seconds.toString().padStart(2, '0')
+      const mm = this.minutes.toString().padStart(2, '0')
 
-      return `${hh}:${mm}:${ss}`
+      if (this.minutes === 0) {
+        return `${ss}`
+      }
+      if (this.hours === 0) {
+        return `${mm}:${ss}`
+      } else {
+        const hh = this.hours.toString().padStart(2, '0')
+        return `${hh}:${mm}:${ss}`
+      }
     }
+  },
+  mounted() {
+    this.formatTime()
   }
 }
 </script>
 
 <style scoped>
-.active-timer {
-  background-color: gray;
+.active-timer .timer-time{
+ color: #fff;
+  border-color: #fff;
+}
+.active-timer .timer-actions-start{
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 17px solid #fff;
+  background: transparent;
+}
+.active-timer .timer-actions-reset{
+  background: #fff;
+}
+
+.timer {
+  background: #696969;
+  height: 120px;
+  max-width: 225px;
+  width: 100%;
+  max-height: 120px;
+}
+
+.timer-time {
+  display: flex;
+  justify-content: center;
+  padding: 20px 70px;
+  border-bottom: 1px solid #9E9E9E;
+  color: #9E9E9E;
+}
+
+.timer-actions {
+  display: flex;
+  justify-content: center;
+  padding: 20px 70px;
+  gap: 40px;
+}
+
+.timer-actions-start {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 17px solid #9E9E9E;
+  background: transparent;
+  transform: rotate(0deg);
+  cursor: pointer;
+}
+
+.timer-actions-reset {
+  width: 18px;
+  height: 18px;
+  background: #9E9E9E;
+  border: none;
+  cursor: pointer;
+}
+.timer-actions-button-container{
+  display: flex;
+  cursor: pointer;
+}
+.stripes-container {
+  display: flex;
+  gap: 5px;
+}
+.stripe {
+  width: 3px;
+  height: 20px;
+  background-color: white;
 }
 </style>
