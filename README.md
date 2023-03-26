@@ -13,7 +13,7 @@
 * Возможность добавления нескольких таймеров одновременно
 
 ## Preview
-![](../../../../Downloads/chrome-capture-2023-2-26.gif)
+![chrome-capture-2023-2-26](https://user-images.githubusercontent.com/69668430/227781890-fe835497-3649-4dba-885a-cc04d45305d3.gif)
 
 ### Get Started
 ``` bash
