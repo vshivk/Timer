@@ -1,15 +1,8 @@
 <template>
   <div class="timers-container">
     <ul class="timers-list">
-      <li class="timers-element"
-          v-for="timer in timers"
-          :key="timer.id"
-      >
-        <Timer
-            :hours="timer.hours"
-            :minutes="timer.minutes"
-            :seconds="timer.seconds"
-        />
+      <li class="timers-element" v-for="(timer, index) in timers" :key="timer.id">
+        <Timer :timer="timer" @update-timer="(updatedTimer) => timers[index] = updatedTimer"/>
       </li>
       <li class="timers-element">
         <div class="timers-add" @click="addTimer">
@@ -21,8 +14,8 @@
 </template>
 
 <script>
-import Timer from './TimeTracker.vue'
-import {nanoid} from 'nanoid'
+import Timer from './TimeTracker.vue';
+import {nanoid} from 'nanoid';
 
 export default {
   name: 'TimerList',
@@ -31,14 +24,12 @@ export default {
   },
   data() {
     return {
-      timers: [
-        {
-          id: nanoid(5),
-          hours: 0,
-          minutes: 0,
-          seconds: 0
-        }
-      ]
+      timers: [{
+        id: nanoid(5),
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      }]
     }
   },
   methods: {
@@ -54,13 +45,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .timers-container {
   max-width: 830px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 50px;
-  padding-right: 50px;
+  margin: 0 auto;
+  padding: 0 50px;
 }
 
 .timers-list {
@@ -69,27 +58,22 @@ export default {
   justify-content: center;
   grid-template-columns: repeat(3, 1fr);
   gap: 50px;
-}
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  .timers-list {
+  @media (min-width: 768px) and (max-width: 1023px) {
     grid-template-columns: repeat(2, 0.4fr);
   }
-}
 
-@media (min-width: 320px) and (max-width: 767px) {
-  .timers-list {
+  @media (max-width: 767px) {
     grid-template-columns: repeat(1, 1fr);
   }
+}
 
-  .timers-element {
-    display: flex;
-    justify-content: center;
-  }
+.timers-element {
+  display: flex;
+  justify-content: center;
 }
 
 .timers-add {
-  background: #696969;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,20 +83,22 @@ export default {
   width: 100%;
   position: relative;
   cursor: pointer;
-}
+  background: var(--gray);
 
-.timers-add-plus:before, .timers-add-plus:after {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 3px;
-  top: calc(50% - 1px);
-  left: calc(50% - 10px);
-  background-color: #9E9E9E;
-  transform: rotate(90deg);
-}
+  &-plus:before,
+  &-plus:after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 3px;
+    top: calc(50% - 1px);
+    left: calc(50% - 10px);
+    background-color: var(--light-gray);
+    transform: rotate(90deg);
+  }
 
-.timers-add-plus:after {
-  transform: rotate(180deg);
+  &-plus:after {
+    transform: rotate(180deg);
+  }
 }
 </style>
