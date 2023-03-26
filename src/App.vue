@@ -25,7 +25,8 @@ body {
   font-family: 'Gotham Pro', sans-serif;
   background-color: #353638;
 }
-ul{
+
+ul {
   list-style-type: none;
   padding-inline-start: 0;
   margin: 0;

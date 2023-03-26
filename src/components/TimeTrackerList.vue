@@ -1,7 +1,10 @@
 <template>
   <div class="timers-container">
     <ul class="timers-list">
-      <li class="timers-element" v-for="(timer, index) in timers" :key="index">
+      <li class="timers-element"
+          v-for="timer in timers"
+          :key="timer.id"
+      >
         <Timer
             :hours="timer.hours"
             :minutes="timer.minutes"
@@ -19,6 +22,7 @@
 
 <script>
 import Timer from './TimeTracker.vue'
+import {nanoid} from 'nanoid'
 
 export default {
   name: 'TimerList',
@@ -29,6 +33,7 @@ export default {
     return {
       timers: [
         {
+          id: nanoid(5),
           hours: 0,
           minutes: 0,
           seconds: 0
@@ -39,6 +44,7 @@ export default {
   methods: {
     addTimer() {
       this.timers.push({
+        id: nanoid(5),
         hours: 0,
         minutes: 0,
         seconds: 0
