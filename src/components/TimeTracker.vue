@@ -19,7 +19,10 @@
 <script>
 export default {
   props: {
-    timer: Object
+    timer: {
+      type: Object,
+      required: true
+    },
   },
   data() {
     return {
