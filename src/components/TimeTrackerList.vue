@@ -1,15 +1,19 @@
 <template>
   <div class="timers-container">
-    <div class="timers-wrapper">
-      <div class="timers-element" v-for="(timer, index) in timers" :key="index">
-        <Timer :hours="timer.hours" :minutes="timer.minutes" :seconds="timer.seconds"/>
-      </div>
-      <div class="timers-element">
+    <ul class="timers-list">
+      <li class="timers-element" v-for="(timer, index) in timers" :key="index">
+        <Timer
+            :hours="timer.hours"
+            :minutes="timer.minutes"
+            :seconds="timer.seconds"
+        />
+      </li>
+      <li class="timers-element">
         <div class="timers-add" @click="addTimer">
-          <span class="timers-add-cross"></span>
+          <span class="timers-add-plus"></span>
         </div>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -43,6 +47,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .timers-container {
   max-width: 830px;
@@ -52,7 +57,7 @@ export default {
   padding-right: 50px;
 }
 
-.timers-wrapper {
+.timers-list {
   padding: 70px 0;
   display: grid;
   justify-content: center;
@@ -61,13 +66,13 @@ export default {
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .timers-wrapper {
+  .timers-list {
     grid-template-columns: repeat(2, 0.4fr);
   }
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
-  .timers-wrapper {
+  .timers-list {
     grid-template-columns: repeat(1, 1fr);
   }
 
@@ -90,7 +95,7 @@ export default {
   cursor: pointer;
 }
 
-.timers-add-cross:before, .timers-add-cross:after {
+.timers-add-plus:before, .timers-add-plus:after {
   content: "";
   position: absolute;
   width: 20px;
@@ -101,9 +106,7 @@ export default {
   transform: rotate(90deg);
 }
 
-.timers-add-cross:after {
+.timers-add-plus:after {
   transform: rotate(180deg);
 }
-
-
 </style>

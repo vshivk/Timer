@@ -1,24 +1,19 @@
 <template>
-  <div class="timer">
-    <div :class="{'active-timer': active}">
-      <div class="timer-time">{{ formatTime() }}</div>
-      <div class="timer-actions">
-        <div class="timer-actions-button-container">
-          <div @click="startPause">
-            <span v-if="!active" class="timer-actions-start"></span>
-            <div v-else class="stripes-container">
-              <div class="stripe"></div>
-              <div class="stripe"></div>
-            </div>
-          </div>
-        </div>
-        <div class="timer-actions-button-container">
-          <span class="timer-actions-reset" @click="reset"></span>
-        </div>
+  <div class="timer" :class="{ active: active }">
+    <div class="timer-time">{{ formatTime() }}</div>
+    <div class="timer-actions">
+      <div class="timer-actions-item" @click="startPause">
+        <span v-if="!active" class="timer-actions-start"></span>
+        <span v-else class="timer-actions-pause">
+          <span class="timer-actions-pause-stripe"></span>
+          <span class="timer-actions-pause-stripe"></span>
+        </span>
+      </div>
+      <div class="timer-actions-item">
+        <span class="timer-actions-reset" @click="reset"></span>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -81,17 +76,19 @@ export default {
 </script>
 
 <style scoped>
-.active-timer .timer-time{
- color: #fff;
+.active .timer-time {
+  color: #fff;
   border-color: #fff;
 }
-.active-timer .timer-actions-start{
+
+.active .timer-actions-start {
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
   border-left: 17px solid #fff;
   background: transparent;
 }
-.active-timer .timer-actions-reset{
+
+.active .timer-actions-reset {
   background: #fff;
 }
 
@@ -106,7 +103,7 @@ export default {
 .timer-time {
   display: flex;
   justify-content: center;
-  padding: 20px 70px;
+  padding: 20px 0;
   border-bottom: 1px solid #9E9E9E;
   color: #9E9E9E;
 }
@@ -114,7 +111,7 @@ export default {
 .timer-actions {
   display: flex;
   justify-content: center;
-  padding: 20px 70px;
+  padding: 20px 0;
   gap: 40px;
 }
 
@@ -137,15 +134,20 @@ export default {
   border: none;
   cursor: pointer;
 }
-.timer-actions-button-container{
+
+.timer-actions-item {
   display: flex;
   cursor: pointer;
+  max-width: 20px;
+  width: 100%;
 }
-.stripes-container {
+
+.timer-actions-pause {
   display: flex;
   gap: 5px;
 }
-.stripe {
+
+.timer-actions-pause-stripe {
   width: 3px;
   height: 20px;
   background-color: white;
